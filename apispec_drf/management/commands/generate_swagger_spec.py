@@ -16,7 +16,7 @@ class Command(BaseCommand):
             help='Inject GitHub-flavored Markdown from this file into the auto-generated swagger spec'
         )
         parser.add_argument('--include-oauth2-security', default=False)
-        parser.add_argument('versions', nargs='*')
+        parser.add_argument('versions', nargs='*', default=[])
 
     def handle(self, *args, **options):
         versions = options.get('versions')
@@ -43,5 +43,3 @@ class Command(BaseCommand):
                     self.stdout.write("Generating '{}' spec in '{}'".format(version, output_path))
                 spec = APISpecDRF(version=version, preamble=preamble, include_oauth2_security=include_oauth2_security)
                 spec.write_to(spec_file)
-
-
